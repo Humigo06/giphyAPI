@@ -5,11 +5,20 @@ const endpoint = "https://api.giphy.com/v1/gifs/search?api_key=pyUA9ShFQBp0mEATE
 async function getImage() {
     const response = await fetch(endpoint);
     const data = await response.json();
-    const images = data.data[0].images.fixed_height.url;
+    const images = []; 
+    images.push(data.data[0].images.fixed_height.url);
 
+
+    console.log(images);
     // Update the DOM with the image
-    const output = document.getElementById("gif-container");
-    output.innerHTML = `<img src="${images}" class="col-3 mb-3">`;
+    const output = document.querySelector("#gif-container");
+    // output.innerHTML = `<img src="${images}" class="col-3 mb-3">`;
+    const btn = document.querySelector("#fetch-gif-btn");
+    output.innerHTML = "";
+    btn.addEventListener("click", async function() {
+        for (let i = 0; i < images.length; i++) {
+            output.innerHTML += `<img src="${images}" class="col-3 mb-3">`;
+        }
+});
 }
-
-getImage()
+getImage();
